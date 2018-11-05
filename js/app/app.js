@@ -31,7 +31,8 @@
             };
 
             vm.getNews = function() {
-                const req =new Request(DB_URI+'/news/'+today+'.json', {method:'GET'});
+                // orderBy="weight"&limitToLast=2
+                const req =new Request(DB_URI+'/news/'+today+'.json?orderBy="$key"&limitToFirst=8', {method:'GET'});
                 fetch(req)
                     .then(response => {
                         response.json().then(data=> {
@@ -43,5 +44,5 @@
 
             }();
         };
-    
+
 })();
