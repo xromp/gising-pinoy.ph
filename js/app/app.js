@@ -4,10 +4,10 @@
         .controller('LandingCtrl', LandingCtrl)
         .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             $locationProvider.html5Mode(true);
-            $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state('home', {
-                    url: '/home',
+                    url: '/',
                     templateUrl: 'home.html',
                     controller: LandingCtrl
                 })
@@ -32,11 +32,16 @@
 
             vm.getNews = function() {
                 // orderBy="weight"&limitToLast=2
-                const req =new Request(DB_URI+'/news/'+today+'.json?orderBy="$key"&limitToFirst=8', {method:'GET'});
+                const req =new Request(DB_URI+'/news/'+today+'.json?orderBy="$key"&limitToFirst=50', {method:'GET'});
                 fetch(req)
                     .then(response => {
                         response.json().then(data=> {
-                            vm.news.popular = data;
+                            const formData = angular.copy(data);
+                            vm.news.header = formData.slice(0,3);
+                            vm.news.leftSide = formData.slice(4,10);
+                            vm.news.popular = formData.slice(11,19);
+                            vm.news.popular2 = formData.slice(20,28);
+                            vm.news.leftSide2 = formData.slice(29,33);
                             console.log(vm);
                             $scope.$apply();
                         });

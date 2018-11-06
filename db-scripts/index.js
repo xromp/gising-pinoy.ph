@@ -30,7 +30,6 @@ function getArticles (url) {
 			thumbnail: 'a img@src',
 			url: 'a @href'
 		}])
-		.limit(20);
 
 		scrape((err, result) => {
 
